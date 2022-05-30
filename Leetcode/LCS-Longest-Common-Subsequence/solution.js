@@ -1,23 +1,39 @@
-// WHAT IS A SUBSEQUENCE? 
-// STRINGA = 'ABCDEFGHIJ'
-// A SUBSEQUENCE COULD BE ANY ASSORTMENT IN THE ABOVE STRING THAT FOLLOWS ITS SEQUENCE.
-// ANY ONE CHARACTER CAN BE SUBSEQUENCE. IF YOU TAKE A SUBSEQUENCE OF MULTIPLE CHARACTERS THEY MUST SHOW UP 
-// IN THE SAME SEQUENCE HENCE THE NAME SUBSEQUENCE. 
-// FOR EXAMPLE 'A' AND 'AB' ARE SUBSEQUENCES OF STRINGA BUT 'AC' AND 'AJ' ARE ALSO SUBSEQEUNCES BECAUSE THEYRE IN ORDER.
-// 'JGA' WOULD NOT BE A SUBSEQUENCE BECAUSE EVEN THOUGH THE CHARACTERS ARE INCLUDED IN STRINGA THEY ARE NOT IN ORDER.
-// GIVEN TWO STRINGS STRINGA AND SUBSTRINGA SUCH THAT 
-// STRINGA = 'ABCDEFGHIJ' 
-// SUBSTRINGA = 'ECDGI'
-// A COMMON SUBSEQUENCE OF STRINGA AND SUBSTRINGA COULD INCLUDE : 
-// 'CDGI'
-// 'EGI'
-// GIVEN TWO STRINGS STRINGA AND SUBSTRINGA SUCH THAT 
-// STRINGA = 'ABDACE'
-// SUBSTRINGA = 'BABCE'
-// A COMMON SUBSEQUENCE OF STINGA AND SUBSTRINGA COULD INCLUDE : 
-// 'ABCE'
-// 'BACE'
-const LCS = (strA, strB)=> {
-    if (!strA || !strB)  return 0 
-    
-}
+/*
+Given two strings text1 and text2, return the length of their longest common 
+subsequence. If there is no common subsequence, return 0.
+
+A subsequence of a string is a new string generated from the original string with 
+some characters (can be none) deleted without changing the relative order 
+of the remaining characters.
+
+For example, "ace" is a subsequence of "abcde".
+A common subsequence of two strings is a subsequence that is common to both strings.
+*/
+const longestCommonSubsequence = function(text1, text2) {
+    let temp
+    let m = text1.length
+    let n = text2.length
+    let dp = []
+    dp.length = n + 1
+    dp.fill([])
+    for (let d=0; d<m+1; d++) {
+        dp[0].push(0)
+    }
+    console.log(dp)
+    for (let i=n-1; i>=0; i--) {
+        for (let j=m-1; j>=0; j--) {
+            if (j!== m+1 || i !==m+1) {
+                if (text1.charAt(j) == text2.charAt(i)) {
+                    console.log(i,j)
+                    dp[i][j] = 1 + dp[i+1][j+1]
+                }
+                else {
+                    dp[i][j] = Math.max(dp[i+1][j], dp[i][j+1])
+                }
+            }
+        }
+    }
+    console.log(dp)
+    return dp[0][0]
+};
+longestCommonSubsequence("ace", "abcde")
